@@ -1,26 +1,561 @@
-html,
-body {
-  padding: 0;
+:root {
+  --black: #000112;
+  --veryDarkGrey: #20212c;
+  --darkGrey: #2b2c37;
+  --linesDark: #3e3f4e;
+  --mediumGrey: #828fa3;
+  --linesLight: #e4ebfa;
+  --lightGrey: #f4f7fd;
+  --white: #ffffff;
+  --mainPurple: #635fc7;
+  --mainPurpleWithOpacity: rgba(99, 95, 199, 0.1);
+  --mainPurpleHover: #a8a4ff;
+  --red: #ea5555;
+  --redHover: #ff9898;
+}
+.lightTheme {
+  --primaryBackground: var(--white);
+  --secondaryBackground: var(--lightGrey);
+
+  --primaryText: var(--black);
+  --addSubTaskBgColor: var(--mainPurpleWithOpacity);
+}
+.darkTheme {
+  --primaryBackground: var(--darkGrey);
+  --secondaryBackground: var(--veryDarkGrey);
+
+  --primaryText: var(--white);
+  --addSubTaskBgColor: var(--white);
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--primaryBackground);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--mainPurple);
+}
+*,
+*::before,
+*::after {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  padding: 0;
+  font-family: "PlusJakartaSans";
 }
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 * {
   box-sizing: border-box;
 }
+a {
+  text-decoration: none;
+}
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+h1,
+h2,
+h3,
+h5 {
+  font-weight: 700;
+  color: var(--primaryText);
+}
+h1 {
+  font-size: 24px;
+  line-height: 30px;
+}
+h2 {
+  font-size: 18px;
+  line-height: 23px;
+}
+h3 {
+  font-size: 1rem;
+  line-height: 19px;
+}
+h5 {
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 2.4px;
+  color: var(--mediumGrey);
+}
+button {
+  cursor: pointer;
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+  border-radius: 20px;
+}
+button:disabled{
+  background-color: var(--mainPurpleHover);
+}
+option {
+  background-color: var(--primaryBackground);
+  color: var(--primaryText);
+}
+
+.toggleTheme label {
+  position: absolute;
+  width: 100%;
+  top: -5px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+.toggleSwitch {
+  cursor: pointer;
+  position: relative;
+  width: 30px;
+}
+.toggleTheme input[type="checkbox"] {
+  display: none;
+}
+.slider {
+  position: absolute;
+  width: 100%;
+  height: 13px;
+  border-radius: 50px;
+  transition: 0.3s;
+  background-color: var(--mainPurple);
+}
+
+.slider::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background-color: var(--white);
+  transition: 0.3s;
+}
+
+input:checked ~ .slider::before {
+  left: 18px;
+  background-color: var(--white);
+  box-shadow: none;
+}
+
+.mediumPara {
+  font-size: 13px;
+  line-height: 23px;
+  font-weight: 500;
+}
+.boldPara {
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: bold;
+}
+/* Utils */
+.flex {
+  display: flex;
+}
+.verticalCenter{
+  display: flex;
+  align-items: center;
+}
+.flexGrow {
+  flex-grow: 1;
+}
+.spacer{
+  flex-grow: 1;
+}
+.pointer {
+  cursor: pointer;
+}
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.alignCenter {
+  align-items: center;
+  gap: 8px;
+}
+.options {
+  background-color: var(--secondaryBackground);
+  color: var(--primaryText);
+  border: 0.25px solid var(--black);
+  top: 100%;
+  left: -10ch;
+  width: 11ch;
+  padding: 8px;
+  border-radius: 8px;
+  white-space: nowrap;
+}
+.options p {
+  cursor: pointer;
+}
+.fullWidth {
+  width: 100%;
+}
+.bgPurple {
+  background-color: var(--mainPurple);
+}
+button.bgPurple:hover {
+  background-color: var(--mainPurpleHover);
+}
+.red {
+  color: var(--red);
+}
+.mediumGrey {
+  color: var(--mediumGrey);
+}
+.bgRed {
+  background-color: var(--red);
+  color: var(--white);
+}
+.bgPurpleOpacity {
+  background-color: var(--addSubTaskBgColor);
+  color: var(--mainPurple);
+}
+.textPrimary {
+  color: var(--primaryText);
+}
+.textGrey {
+  color: var(--mediumGrey);
+}
+.lineThrough {
+  text-decoration: line-through;
+}
+.center {
+  color: var(--veryDarkGrey);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.hidden {
+  display: none;
+}
+/* Home Page */
+.container {
+  height: 100vh;
+  background-color: var(--secondaryBackground);
+}
+.navbar {
+  height: 60px;
+  background-color: var(--primaryBackground);
+}
+.navbar h1 {
+  font-size: 2rem;
+}
+.logoSection {
+  padding: 1rem 1rem;
+  height: 4rem;
+  width: 20vw;
+  gap: 10px;
+}
+.mainNavSection {
+  border-left: 2px solid var(--secondaryBackground);
+  flex-grow: 1;
+  padding-inline: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.navActions img {
+  height: 1rem;
+}
+
+.mainSection {
+  height: calc(100vh - 60px);
+}
+/* Sidebar */
+.sideBar {
+  flex-grow: 0;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: var(--primaryBackground);
+  flex-basis: 20vw;
+  flex-shrink: 0;
+  padding: 1rem 25px 2rem 0px;
+}
+.sideBar h5 {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+.boardsList {
+  flex-grow: 1;
+}
+.boardTile {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.5rem 1rem;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  color: var(--primaryText);
+}
+.boardTileSelected {
+  background-color: var(--mainPurple);
+  color: var(--white);
+}
+.boardTile img {
+  height: 1rem;
+}
+.createTile {
+  font-weight: 600;
+  color: var(--mainPurple);
+}
+.toggleTheme {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 16px 1rem;
+  height: 40px;
+  padding: 5px;
+  background-color: var(--secondaryBackground);
+}
+.toggleTheme img {
+  width: 20px;
+  height: 20px;
+}
+.hideSideBar {
+  cursor: pointer;
+  align-items: center;
+  gap: 20px;
+  margin-inline: 1rem;
+}
+.hideSideBar p {
+  color: var(--primaryText);
+}
+.hideSideBar img {
+  width: 20px;
+  height: 20px;
+}
+.showSideBar {
+  position: absolute;
+  cursor: pointer;
+  align-self: flex-end;
+  margin-bottom: 2rem;
+  background-color: var(--mainPurple);
+  color: var(--white);
+  padding: 1rem 1rem;
+  border-bottom-right-radius: 50%;
+  border-top-right-radius: 50%;
+}
+
+.mainTasksSection {
+  overflow: hidden;
+  flex-grow: 1;
+  display: flex;
+}
+
+.tasksGrid {
+  overflow-y: scroll;
+  overflow-x: scroll;
+  padding: 24px;
+  flex-grow: 1;
+  display: flex;
+  column-gap: 24px;
+}
+.taskColumn > h5 {
+  text-transform: uppercase;
+}
+.tasksGrid > div {
+  flex-basis: 280px;
+  flex-shrink: 0;
+}
+.task {
+  cursor: pointer;
+  box-shadow: 0px 4px 6px 0px rgba(54, 78, 126, 0.1);
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--primaryBackground);
+  height: 100px;
+  padding-inline: 1rem;
+  border-radius: 8px;
+}
+.task p {
+  color: var(--mediumGrey);
+}
+.overlay {
+  overflow-x: hidden;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(0, 0, 0, 0.7);
+}
+.overlay label {
+  color: var(--mediumGrey);
+}
+.overlayContent {
+  display: flex;
+  align-items: stretch;
+  overflow-y: auto;
+  flex-direction: column;
+  width: 40vw;
+  background-color: var(--primaryBackground);
+  border-radius: 10px;
+  padding: 20px;
+  gap: 18px;
+  max-height: 95vh;
+}
+.taskDetails .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.taskDetails .title h2 {
+  max-width: 30ch;
+}
+.taskDetails > .mediumPara,
+.subtasks > .mediumPara,
+.setTaskStatus > .mediumPara {
+  color: var(--mediumGrey);
+}
+.subtask {
+  background-color: var(--secondaryBackground);
+  display: flex;
+  gap: 20px;
+  padding: 12px;
+  margin-top: 8px;
+}
+.subtask input[type="checkbox"] {
+  accent-color: var(--mainPurple);
+}
+.setTaskStatus select {
+  margin-top: 8px;
+  width: 100%;
+  padding: 8px;
+  background-color: transparent;
+  color: var(--primaryText);
+}
+.inputField {
+  display: flex;
+  flex-direction: column;
+}
+.inputField textarea {
+  resize: none;
+  height: 100%;
+}
+input:focus,
+textarea:focus {
+  outline: none;
+}
+.inputField input,
+.inputField textarea,
+.overlaySubTile input {
+  padding: 8px;
+  border: 1.5px solid var(--linesDark);
+  background-color: transparent;
+  color: var(--primaryText);
+}
+.overlaySubTile {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.overlaySubTile input {
+  width: 100%;
+}
+.errorBox {
+  position: absolute;
+  right: 1ch;
+  top: 0px;
+  bottom: 0px;
+  display: flex;
+  align-items: center;
+  color: var(--red);
+  font-weight: 400;
+  font-size: small;
+}
+
+.errorHighlight input {
+  border-color: var(--red);
+}
+.overlayList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.deleteOverlayActions {
+  gap: 20px;
+}
+.upsideDown {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+
+/* Tablet Sizes */
+@media screen and (min-width: 550px) and (max-width: 900px) {
+  .logoSection {
+    width: 34vw;
+    gap: 5px;
   }
-  body {
-    color: white;
-    background: black;
+  .sideBar {
+    flex-basis: 34vw;
+    padding-right: 10px;
+  }
+  .overlayContent {
+    width: 62.5vw;
+  }
+  .tasksGrid {
+    padding: 12px;
+  }
+}
+@media screen and (max-width: 549px) {
+  .navbar {
+    padding-inline: 1rem;
+    flex-basis: 60px;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
+  .logoSection {
+    padding-inline: 0px;
+    width: unset;
+    height: unset;
+  }
+  .logoSection h1 {
+    display: none;
+  }
+  .mainNavSection {
+    border: none;
+    padding-inline: 0px;
+  }
+  .sideBar {
+    display: none;
+  }
+  .overlayContent {
+    width: 90vw;
+  }
+  .mobileOverlay {
+    position: absolute;
+    top: 60px;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    background-color: rgb(0, 0, 0, 0.7);
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .mobileOverlayContent {
+    margin-top: 8px;
+    width: 60vw;
+    padding: 8px 8px 8px 0px;
+    border-radius: 10px;
+    background-color: var(--white);
+  }
+  .deleteOverlayActions {
+    flex-direction: column;
   }
 }

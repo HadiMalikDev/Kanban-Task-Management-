@@ -3,15 +3,17 @@ import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import TasksGrid from "../components/TasksGrid";
 import BoardsList from "../components/BoardsList";
+import ToggleTheme from "../components/ToggleTheme";
 const { TasksContext } = require("../context/TasksContext").default;
 const { ThemeContext } = require("../context/ThemeContext").default;
-//const tasksData = require("../data.json");
+
 export default function Home() {
   const { tasksData, selectedBoardIndex, setSelectedBoardIndex } =
     React.useContext(TasksContext);
   const [isMobile, setIsMobile] = React.useState(false);
   const [mobileOverlayShowing, setMobileOverlayShowing] = React.useState(false);
   React.useEffect(() => {
+    setIsMobile(window.innerWidth < 550);
     function onMove() {
       setIsMobile(window.innerWidth < 550);
     }
@@ -43,7 +45,7 @@ export default function Home() {
               selected={selectedBoardIndex}
               setSelected={setSelectedBoardIndex}
             />
-            {/* <ToggleTheme /> */}
+            <ToggleTheme />
           </div>
         </div>
       )}

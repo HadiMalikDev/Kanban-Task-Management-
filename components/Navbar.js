@@ -30,33 +30,7 @@ export default function Navbar({
     subtasks: [],
     status: "",
   };
-  // React.useEffect(() => {
-  //   if (
-  //     !newTask.title &&
-  //     !newTask.description &&
-  //     !newTask.subtasks.length &&
-  //     !newTask.status
-  //   ) {
-  //     return;
-  //   }
-  //   setGridState((prev) => {
-  //     const newGridState = { ...prev };
-  //     console.log("SSSS");
-  //     console.log(newTask);
-  //     const columnIndex=columnNames.indexOf(newTask.status)
-  //     console.log(newGridState.columns[columnIndex])
-  //     newGridState.columns[columnIndex==-1?0:columnIndex].tasks.push(newTask);
-  //     return newGridState;
-  //   });
-  //   setNewTask(newTaskObject)
-  // }, [newTask]);
-
-  // const columnNames = [];
-  // console.log(gridState);
-  // for (const col of gridState.columns) {
-  //   columnNames.push(col.name);
-  // }
-
+  console.log(isMobile)
   return (
     <div className="navbar flex">
       <NavBarLogo />

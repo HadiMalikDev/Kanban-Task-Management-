@@ -553,7 +553,7 @@ textarea:focus {
   .mobileOverlay {
     position: absolute;
     top: 60px;
-    bottom: 0px;
+    height: calc(100vh - 60px);
     right: 0px;
     left: 0px;
     background-color: rgb(0, 0, 0, 0.7);

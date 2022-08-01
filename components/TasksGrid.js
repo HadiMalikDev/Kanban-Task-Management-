@@ -23,7 +23,7 @@ function TasksList({ tasks, columnNames, columnIndex }) {
                 {...provided.dragHandleProps}
               >
                 <TaskTile
-                  key={`Task: ${taskIndex} ${columnIndex}`}
+                  key={`Task: ${taskIndex} ${columnIndex} ${task.title}`}
                   task={task}
                   columnNames={columnNames}
                   editTask={(editedTask) => {
@@ -46,10 +46,8 @@ export default function TasksGrid() {
   const { tasksData, selectedBoardIndex, reorderColumn } =
     React.useContext(TasksContext);
   const columnNames = [];
-  let board;
   if (tasksData.boards.length > 0) {
-    board = tasksData.boards[selectedBoardIndex];
-    for (const col of board.columns) {
+    for (const col of tasksData.boards[selectedBoardIndex].columns) {
       columnNames.push(col.name);
     }
   }
@@ -75,14 +73,13 @@ export default function TasksGrid() {
       destination.index
     );
   };
-  const onDragUpdate=(x,y)=>{
-    console.log(y)
-  }
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
   if (columnNames.length > 0) {
     return (
       <div className="tasksGrid">
-        <DragDropContext onDragEnd={onDragEnd} onDragUpdate={onDragUpdate}>
-          {board.columns.map((column, columnIndex) => (
+        <DragDropContext onDragEnd={onDragEnd}>
+          {tasksData.boards[selectedBoardIndex].columns.map((column, columnIndex) => (
             <div className="taskColumn" key={`${column.name} ${columnIndex}`}>
               <h5>
                 {column.name} ({column.tasks.length})
@@ -91,12 +88,16 @@ export default function TasksGrid() {
                 {(provided) => {
                   return (
                     <div ref={provided.innerRef} className="fullHeight">
-                      <TasksList
-                        {...provided.droppableProps}
-                        tasks={column.tasks}
-                        columnNames={columnNames}
-                        columnIndex={columnIndex}
-                      />
+                      {mounted ? (
+                        <TasksList
+                          {...provided.droppableProps}
+                          tasks={column.tasks}
+                          columnNames={columnNames}
+                          columnIndex={columnIndex}
+                        />
+                      ) : (
+                        <></>
+                      )}
                       {provided.placeholder}
                     </div>
                   );

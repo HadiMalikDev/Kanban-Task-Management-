@@ -100,11 +100,11 @@ const TasksProvider = ({ children }) => {
       const [task] = newTasksData.boards[selectedBoardIndex].columns[
         oldColumnIndex
       ].tasks.splice(oldTaskIndex, 1);
+      task.status = newColumnName;
       newTasksData.boards[selectedBoardIndex].columns[
         newColumnIndex
       ].tasks.splice(newTaskIndex, 0, task);
       return newTasksData;
-
     });
   };
   return (

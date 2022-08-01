@@ -15,3 +15,7 @@ Contrary to what I had initially expected, the CSS wasn't the hard part of the p
 I initially did get it to work using a "duct and tape" solution of sorts, but I was unhappy with the architecture. After some thought, inspiration finally came and I tore down the old architecture and build a new one, with all the task management functionality wrapped in a neat function of its own. This greatly reduced the lines of code I had to write, made debugging easier, and was generally better to look at. 
 
 All in all, this project took me 24 hours to complete.
+
+It also features drag and drop with synchronized state updation. 
+
+I tried using the (react version of SortableJS)[https://www.npmjs.com/package/react-sortablejs] but it did not offer the functionality to move items between columns. Then I stumbled upon the (react-beautiful-dnd)[https://www.npmjs.com/package/react-beautiful-dnd] package, which gave me exactly what I was looking for.

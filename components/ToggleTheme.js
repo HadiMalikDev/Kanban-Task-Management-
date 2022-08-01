@@ -10,7 +10,7 @@ export default function ToggleTheme() {
         <label>
           <input
             type="checkbox"
-            onClick={() => toggleTheme()}
+            onChange={() => toggleTheme()}
             checked={theme === "darkTheme"}
           />
           <span className="slider"></span>

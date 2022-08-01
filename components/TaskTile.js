@@ -42,13 +42,6 @@ function TaskDescription({
               task.subtasks[subtaskIndex].isCompleted =
                 !task.subtasks[subtaskIndex].isCompleted;
               editTask(task);
-              // setTaskState((prev) => {
-              //   const newTaskState = { ...prev };
-              //   console.log(newTaskState.subtasks[subtaskIndex].isCompleted);
-              //   newTaskState.subtasks[subtaskIndex].isCompleted =
-              //     !newTaskState.subtasks[subtaskIndex].isCompleted;
-              //   return newTaskState;
-              // });
             }}
           />
         ))}

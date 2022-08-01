@@ -30,7 +30,6 @@ export default function Navbar({
     subtasks: [],
     status: "",
   };
-  console.log(isMobile)
   return (
     <div className="navbar flex">
       <NavBarLogo />
@@ -52,7 +51,6 @@ export default function Navbar({
           {isMobile && (
             <ChevronDown
               onClick={() => {
-                console.log(theme);
                 setMobileOverlayShowing((prev) => !prev);
               }}
               transform={mobileOverlayShowing ? "rotate(180)" : ""}

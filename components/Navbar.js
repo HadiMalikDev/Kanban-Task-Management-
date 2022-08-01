@@ -46,19 +46,27 @@ export default function Navbar({
         </div>
       )}
       <div className="mainNavSection flex">
-        <div className="flex alignCenter">
+        <div
+          className="flex alignCenter"
+          onClick={() => {
+            if (isMobile) {
+              setMobileOverlayShowing((prev) => !prev);
+            }
+          }}
+        >
           <h2>Platform Launch</h2>
           {isMobile && (
             <ChevronDown
-              onClick={() => {
-                setMobileOverlayShowing((prev) => !prev);
-              }}
               transform={mobileOverlayShowing ? "rotate(180)" : ""}
             />
           )}
         </div>
         <div className="navActions">
-          <button onClick={() => setShowing(true)} className="bgPurple" disabled={!board}>
+          <button
+            onClick={() => setShowing(true)}
+            className="bgPurple"
+            disabled={!board}
+          >
             {isMobile ? <AddTaskMobile /> : "Add New Task"}
           </button>
         </div>

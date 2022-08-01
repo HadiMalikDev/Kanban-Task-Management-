@@ -3,15 +3,27 @@ import Cross from "../public/icon-cross.svg";
 
 export default function BoardOverlay({ board, submitBoard, isEdit = false }) {
   const [localState, setLocalState] = React.useState(board);
-  const [hasError, setHasError] = React.useState(false);
+  const [errorMap, setErrorMap] = React.useState(new Map());
 
   React.useEffect(() => {
-    let foundError = false;
-    for (const col of localState.columns) {
-      foundError = col.name.length == 0;
-      if (foundError) break;
+    const tempErrorMap = new Map();
+    if (localState.name === "") {
+      tempErrorMap.set("name", "Can't be empty");
     }
-    setHasError(foundError);
+    for (let i = 0; i < localState.columns.length; i++) {
+      const column = localState.columns[i];
+      if (column.name === "") {
+        tempErrorMap.set(`Col: ${i}`, "Can't be empty");
+      } else {
+        //Check if another column has the same name
+        const index = localState.columns.findIndex(
+          (col) => col.name === column.name
+        );
+        if (index != -1 && index!=i)
+          tempErrorMap.set(`Col: ${i}`, "Must be unique");
+      }
+    }
+    setErrorMap(tempErrorMap);
   }, [localState]);
 
   function handleFormInput(e) {
@@ -24,12 +36,11 @@ export default function BoardOverlay({ board, submitBoard, isEdit = false }) {
         <label htmlFor="name" className="mediumPara">
           Name
         </label>
-        <input
-          placeholder="e.g Web Design"
-          name="name"
-          value={localState.name}
+        <NameTile
+          name={localState.name}
+          error={errorMap.get("name")}
           onChange={handleFormInput}
-        ></input>
+        />
       </div>
       <div className="overlayList">
         <label className="mediumPara">Columns</label>
@@ -37,7 +48,7 @@ export default function BoardOverlay({ board, submitBoard, isEdit = false }) {
           <OverlaySubTile
             key={`Col: ${index}`}
             column={col}
-            error={col.name.length == 0}
+            error={errorMap.get(`Col: ${index}`)}
             onChange={(content) => {
               setLocalState((prev) => {
                 const newBoardState = { ...prev };
@@ -69,11 +80,31 @@ export default function BoardOverlay({ board, submitBoard, isEdit = false }) {
       </div>
       <button
         className="bgPurple"
-        disabled={hasError}
+        disabled={errorMap.size != 0}
         onClick={() => submitBoard(localState)}
       >
         {isEdit ? "Save Changes" : "Create New Board"}
       </button>
+    </div>
+  );
+}
+function NameTile({ name, error, onChange }) {
+  return (
+    <div className={`${error ? "errorHighlight" : ""}`}>
+      <div className="relative">
+        <input
+          name="name"
+          placeholder="e.g. Web Design"
+          className="fullWidth"
+          value={name}
+          onChange={onChange}
+        />
+        {error && (
+          <div className="errorBox">
+            <p>{error}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -89,7 +120,7 @@ function OverlaySubTile({ column, onChange, onDelete, error }) {
         />
         {error && (
           <div className="errorBox">
-            <p>Can't be empty</p>
+            <p>{error}</p>
           </div>
         )}
       </div>

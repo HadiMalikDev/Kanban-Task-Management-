@@ -6,7 +6,7 @@ const getTasks = () => tasks;
 
 const TasksProvider = ({ children }) => {
   const [tasksData, setTasksData] = React.useState(getTasks());
-  const [selectedBoardIndex, setSelectedBoardIndex] = React.useState(0);
+  const [selectedBoardIndex, setSelectedBoardIndex] = React.useState(2);
 
   const findColumnIndex = (columnName) => {
     return tasksData.boards[selectedBoardIndex].columns.findIndex(
@@ -87,6 +87,26 @@ const TasksProvider = ({ children }) => {
     });
     setSelectedBoardIndex(0);
   };
+  const reorderColumn = (
+    oldColumnName,
+    oldTaskIndex,
+    newColumnName,
+    newTaskIndex
+  ) => {
+    const oldColumnIndex = findColumnIndex(oldColumnName);
+    const newColumnIndex = findColumnIndex(newColumnName);
+    setTasksData((prev) => {
+      const newTasksData = { ...prev };
+      const [task] = newTasksData.boards[selectedBoardIndex].columns[
+        oldColumnIndex
+      ].tasks.splice(oldTaskIndex, 1);
+      newTasksData.boards[selectedBoardIndex].columns[
+        newColumnIndex
+      ].tasks.splice(newTaskIndex, 0, task);
+      return newTasksData;
+
+    });
+  };
   return (
     <TasksContext.Provider
       value={{
@@ -99,6 +119,7 @@ const TasksProvider = ({ children }) => {
         tasksData,
         selectedBoardIndex,
         setSelectedBoardIndex,
+        reorderColumn,
       }}
     >
       {children}

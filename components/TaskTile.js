@@ -37,6 +37,7 @@ function TaskDescription({
         </p>
         {task.subtasks.map((subtask, subtaskIndex) => (
           <SubTaskTile
+            key={`Subtask ${subtaskIndex}`}
             subtask={subtask}
             toggleSubTask={() => {
               task.subtasks[subtaskIndex].isCompleted =

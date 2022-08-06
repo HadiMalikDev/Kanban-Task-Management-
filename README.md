@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-Check the live version [here](https://62e7643ac9d3746e99ac9014--celebrated-muffin-e9f904.netlify.app/)
+Check the live version [here](https://taskmanagment.netlify.app/)
 
 ## Inspiration:
 

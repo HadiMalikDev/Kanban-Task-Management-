@@ -18,4 +18,4 @@ All in all, this project took me 24 hours to complete.
 
 It also features drag and drop with synchronized state updation. 
 
-I tried using the (react version of SortableJS)[https://www.npmjs.com/package/react-sortablejs] but it did not offer the functionality to move items between columns. Then I stumbled upon the (react-beautiful-dnd)[https://www.npmjs.com/package/react-beautiful-dnd] package, which gave me exactly what I was looking for.
+I tried using the [react version of SortableJS](https://www.npmjs.com/package/react-sortablejs) but it did not offer the functionality to move items between columns. Then I stumbled upon the [react-beautiful-dnd](https://www.npmjs.com/package/react-beautiful-dnd) package, which gave me exactly what I was looking for.
